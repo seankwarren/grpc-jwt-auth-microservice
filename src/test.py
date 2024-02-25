@@ -19,7 +19,7 @@ dummy_user = {
 def stub():
     """Create a gRPC stub fixture for testing."""
     # Set up the channel and stub here. Adjust the address and port as necessary.
-    channel = grpc.insecure_channel('localhost:50051')
+    channel = grpc.insecure_channel(f"localhost:{os.environ.get('SERVER_PORT', 50051)}")
     test_stub = auth_service_pb2_grpc.AuthenticationServiceStub(channel)
 
     yield test_stub  # This provides the stub to your test functions.
