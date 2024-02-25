@@ -73,8 +73,8 @@ def test_token_validation(stub, token_status, expected_status, expected_detail):
     if token_status != "valid":
         with pytest.raises(grpc.RpcError) as exc_info:
             stub.ValidateToken(auth_service_pb2.ValidateTokenRequest(user_id=dummy_user["user_id"], token=token))
-        assert exc_info.value.code() == expected_status, f"Expected {expected_status} status but got: {exc_info.value.code()}"
-        assert expected_detail in exc_info.value.details(), f"Expected '{expected_detail}' but got {exc_info.value.details()}"
+        assert exc_info.value.code() == expected_status, f"Expected {expected_status} status but got: {exc_info.value.code()}" # type: ignore
+        assert expected_detail in exc_info.value.details(), f"Expected '{expected_detail}' but got {exc_info.value.details()}" # type: ignore
     else:
         stub.ValidateToken(auth_service_pb2.ValidateTokenRequest(user_id=dummy_user["user_id"], token=token))
     logging.info(f"Token validation test succeeded with {token_status} token.")
@@ -95,8 +95,8 @@ def test_token_refresh(stub, token_status, expected_status, expected_detail):
     if token_status != "valid":
         with pytest.raises(grpc.RpcError) as exc_info:
             stub.RefreshToken(auth_service_pb2.RefreshTokenRequest(user_id=dummy_user["user_id"], token=token))
-        assert exc_info.value.code() == expected_status, f"Expected {expected_status} status but got: {exc_info.value.code()}"
-        assert expected_detail in exc_info.value.details(), f"Expected '{expected_detail}' but got {exc_info.value.details()}"
+        assert exc_info.value.code() == expected_status, f"Expected {expected_status} status but got: {exc_info.value.code()}" # type: ignore
+        assert expected_detail in exc_info.value.details(), f"Expected '{expected_detail}' but got {exc_info.value.details()}" # type: ignore
     else:
         stub.RefreshToken(auth_service_pb2.RefreshTokenRequest(user_id=dummy_user["user_id"], token=token))
     logging.info(f"Refresh token test succeeded with {token_status} token.")
