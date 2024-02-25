@@ -9,7 +9,7 @@ class StatusMessage(enum.Enum):
     LOGIN_SUCCEEDED = "Login succeeded"
     LOGIN_FAILED = "Login failed"
     VALIDATE_TOKEN_SUCCEEDED = "Validate token succeeded"
-    REFRESH_TOKEN_SUCCEEDED = "refresh_token_succeeded"
+    REFRESH_TOKEN_SUCCEEDED = "Refresh token succeeded"
     EXPIRED_TOKEN = "Token is expired"
     INVALID_TOKEN = "Token is invalid"
     INTERNAL_ERROR = "Internal server error"
