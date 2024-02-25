@@ -54,22 +54,16 @@ global___RegisterUserRequest = RegisterUserRequest
 class RegisterUserResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    SUCCESS_FIELD_NUMBER: builtins.int
     TOKENS_FIELD_NUMBER: builtins.int
-    MESSAGE_FIELD_NUMBER: builtins.int
-    success: builtins.bool
     @property
     def tokens(self) -> global___AuthTokens: ...
-    message: builtins.str
     def __init__(
         self,
         *,
-        success: builtins.bool = ...,
         tokens: global___AuthTokens | None = ...,
-        message: builtins.str = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["message", b"message", "success", b"success", "tokens", b"tokens"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> None: ...
 
 global___RegisterUserResponse = RegisterUserResponse
 
@@ -98,22 +92,16 @@ global___LoginUserRequest = LoginUserRequest
 class LoginUserResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    SUCCESS_FIELD_NUMBER: builtins.int
     TOKENS_FIELD_NUMBER: builtins.int
-    MESSAGE_FIELD_NUMBER: builtins.int
-    success: builtins.bool
     @property
     def tokens(self) -> global___AuthTokens: ...
-    message: builtins.str
     def __init__(
         self,
         *,
-        success: builtins.bool = ...,
         tokens: global___AuthTokens | None = ...,
-        message: builtins.str = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["message", b"message", "success", b"success", "tokens", b"tokens"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> None: ...
 
 global___LoginUserResponse = LoginUserResponse
 
@@ -139,17 +127,9 @@ global___ValidateTokenRequest = ValidateTokenRequest
 class ValidateTokenResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    SUCCESS_FIELD_NUMBER: builtins.int
-    MESSAGE_FIELD_NUMBER: builtins.int
-    success: builtins.bool
-    message: builtins.str
     def __init__(
         self,
-        *,
-        success: builtins.bool = ...,
-        message: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["message", b"message", "success", b"success"]) -> None: ...
 
 global___ValidateTokenResponse = ValidateTokenResponse
 
@@ -157,14 +137,17 @@ global___ValidateTokenResponse = ValidateTokenResponse
 class RefreshTokenRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    USER_ID_FIELD_NUMBER: builtins.int
     TOKEN_FIELD_NUMBER: builtins.int
+    user_id: builtins.int
     token: builtins.str
     def __init__(
         self,
         *,
+        user_id: builtins.int = ...,
         token: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["token", b"token"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["token", b"token", "user_id", b"user_id"]) -> None: ...
 
 global___RefreshTokenRequest = RefreshTokenRequest
 
@@ -172,21 +155,15 @@ global___RefreshTokenRequest = RefreshTokenRequest
 class RefreshTokenResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
-    SUCCESS_FIELD_NUMBER: builtins.int
     TOKENS_FIELD_NUMBER: builtins.int
-    MESSAGE_FIELD_NUMBER: builtins.int
-    success: builtins.bool
     @property
     def tokens(self) -> global___AuthTokens: ...
-    message: builtins.str
     def __init__(
         self,
         *,
-        success: builtins.bool = ...,
         tokens: global___AuthTokens | None = ...,
-        message: builtins.str = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["message", b"message", "success", b"success", "tokens", b"tokens"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> None: ...
 
 global___RefreshTokenResponse = RefreshTokenResponse

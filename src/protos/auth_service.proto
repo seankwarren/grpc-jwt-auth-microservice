@@ -20,9 +20,7 @@ message RegisterUserRequest {
 }
 
 message RegisterUserResponse {
-    bool success = 1;
     AuthTokens tokens = 2;
-    string message = 3;
 }
 
 message LoginUserRequest {
@@ -32,9 +30,7 @@ message LoginUserRequest {
 }
 
 message LoginUserResponse {
-    bool success = 1;
     AuthTokens tokens = 2;
-    string message = 3;
 }
 
 message ValidateTokenRequest {
@@ -43,16 +39,13 @@ message ValidateTokenRequest {
 }
 
 message ValidateTokenResponse {
-    bool success = 1;
-    string message = 2;
 }
 
 message RefreshTokenRequest {
-    string token = 1;
+    int64 user_id = 1;
+    string token = 2;
 }
 
 message RefreshTokenResponse {
-    bool success = 1;
     AuthTokens tokens = 2;
-    string message = 3;
 }

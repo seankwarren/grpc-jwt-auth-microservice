@@ -14,7 +14,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12\x61uth_service.proto\x12\x0c\x61uth_service\"7\n\nAuthTokens\x12\x13\n\x0b\x61\x63\x63\x65ssToken\x18\x01 \x01(\t\x12\x14\n\x0crefreshToken\x18\x02 \x01(\t\"9\n\x13RegisterUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"b\n\x14RegisterUserResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12(\n\x06tokens\x18\x02 \x01(\x0b\x32\x18.auth_service.AuthTokens\x12\x0f\n\x07message\x18\x03 \x01(\t\"G\n\x10LoginUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\x03\x12\x10\n\x08password\x18\x03 \x01(\t\"_\n\x11LoginUserResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12(\n\x06tokens\x18\x02 \x01(\x0b\x32\x18.auth_service.AuthTokens\x12\x0f\n\x07message\x18\x03 \x01(\t\"6\n\x14ValidateTokenRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\x12\r\n\x05token\x18\x02 \x01(\t\"9\n\x15ValidateTokenResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12\x0f\n\x07message\x18\x02 \x01(\t\"$\n\x13RefreshTokenRequest\x12\r\n\x05token\x18\x01 \x01(\t\"b\n\x14RefreshTokenResponse\x12\x0f\n\x07success\x18\x01 \x01(\x08\x12(\n\x06tokens\x18\x02 \x01(\x0b\x32\x18.auth_service.AuthTokens\x12\x0f\n\x07message\x18\x03 \x01(\t2\xf5\x02\n\x15\x41uthenticationService\x12W\n\x0cRegisterUser\x12!.auth_service.RegisterUserRequest\x1a\".auth_service.RegisterUserResponse\"\x00\x12N\n\tLoginUser\x12\x1e.auth_service.LoginUserRequest\x1a\x1f.auth_service.LoginUserResponse\"\x00\x12Z\n\rValidateToken\x12\".auth_service.ValidateTokenRequest\x1a#.auth_service.ValidateTokenResponse\"\x00\x12W\n\x0cRefreshToken\x12!.auth_service.RefreshTokenRequest\x1a\".auth_service.RefreshTokenResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\x12\x61uth_service.proto\x12\x0c\x61uth_service\"7\n\nAuthTokens\x12\x13\n\x0b\x61\x63\x63\x65ssToken\x18\x01 \x01(\t\x12\x14\n\x0crefreshToken\x18\x02 \x01(\t\"9\n\x13RegisterUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"@\n\x14RegisterUserResponse\x12(\n\x06tokens\x18\x02 \x01(\x0b\x32\x18.auth_service.AuthTokens\"G\n\x10LoginUserRequest\x12\x10\n\x08username\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\x03\x12\x10\n\x08password\x18\x03 \x01(\t\"=\n\x11LoginUserResponse\x12(\n\x06tokens\x18\x02 \x01(\x0b\x32\x18.auth_service.AuthTokens\"6\n\x14ValidateTokenRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\x12\r\n\x05token\x18\x02 \x01(\t\"\x17\n\x15ValidateTokenResponse\"5\n\x13RefreshTokenRequest\x12\x0f\n\x07user_id\x18\x01 \x01(\x03\x12\r\n\x05token\x18\x02 \x01(\t\"@\n\x14RefreshTokenResponse\x12(\n\x06tokens\x18\x02 \x01(\x0b\x32\x18.auth_service.AuthTokens2\xf5\x02\n\x15\x41uthenticationService\x12W\n\x0cRegisterUser\x12!.auth_service.RegisterUserRequest\x1a\".auth_service.RegisterUserResponse\"\x00\x12N\n\tLoginUser\x12\x1e.auth_service.LoginUserRequest\x1a\x1f.auth_service.LoginUserResponse\"\x00\x12Z\n\rValidateToken\x12\".auth_service.ValidateTokenRequest\x1a#.auth_service.ValidateTokenResponse\"\x00\x12W\n\x0cRefreshToken\x12!.auth_service.RefreshTokenRequest\x1a\".auth_service.RefreshTokenResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -26,19 +26,19 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_REGISTERUSERREQUEST']._serialized_start=93
   _globals['_REGISTERUSERREQUEST']._serialized_end=150
   _globals['_REGISTERUSERRESPONSE']._serialized_start=152
-  _globals['_REGISTERUSERRESPONSE']._serialized_end=250
-  _globals['_LOGINUSERREQUEST']._serialized_start=252
-  _globals['_LOGINUSERREQUEST']._serialized_end=323
-  _globals['_LOGINUSERRESPONSE']._serialized_start=325
-  _globals['_LOGINUSERRESPONSE']._serialized_end=420
-  _globals['_VALIDATETOKENREQUEST']._serialized_start=422
-  _globals['_VALIDATETOKENREQUEST']._serialized_end=476
-  _globals['_VALIDATETOKENRESPONSE']._serialized_start=478
-  _globals['_VALIDATETOKENRESPONSE']._serialized_end=535
-  _globals['_REFRESHTOKENREQUEST']._serialized_start=537
-  _globals['_REFRESHTOKENREQUEST']._serialized_end=573
-  _globals['_REFRESHTOKENRESPONSE']._serialized_start=575
-  _globals['_REFRESHTOKENRESPONSE']._serialized_end=673
-  _globals['_AUTHENTICATIONSERVICE']._serialized_start=676
-  _globals['_AUTHENTICATIONSERVICE']._serialized_end=1049
+  _globals['_REGISTERUSERRESPONSE']._serialized_end=216
+  _globals['_LOGINUSERREQUEST']._serialized_start=218
+  _globals['_LOGINUSERREQUEST']._serialized_end=289
+  _globals['_LOGINUSERRESPONSE']._serialized_start=291
+  _globals['_LOGINUSERRESPONSE']._serialized_end=352
+  _globals['_VALIDATETOKENREQUEST']._serialized_start=354
+  _globals['_VALIDATETOKENREQUEST']._serialized_end=408
+  _globals['_VALIDATETOKENRESPONSE']._serialized_start=410
+  _globals['_VALIDATETOKENRESPONSE']._serialized_end=433
+  _globals['_REFRESHTOKENREQUEST']._serialized_start=435
+  _globals['_REFRESHTOKENREQUEST']._serialized_end=488
+  _globals['_REFRESHTOKENRESPONSE']._serialized_start=490
+  _globals['_REFRESHTOKENRESPONSE']._serialized_end=554
+  _globals['_AUTHENTICATIONSERVICE']._serialized_start=557
+  _globals['_AUTHENTICATIONSERVICE']._serialized_end=930
 # @@protoc_insertion_point(module_scope)
