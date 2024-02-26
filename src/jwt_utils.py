@@ -49,9 +49,9 @@ class JWTUtils:
         return all(is_valid)
 
     @staticmethod
-    def get_access_token_lifetime() -> int:
+    def get_access_token_lifetime():
         return int(os.getenv("ACCESS_TOKEN_LIFETIME", 30))
 
     @staticmethod
-    def get_refresh_token_lifetime() -> int:
+    def get_refresh_token_lifetime():
         return int(os.getenv("REFRESH_TOKEN_LIFETIME", 30))

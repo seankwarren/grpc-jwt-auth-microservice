@@ -10,8 +10,8 @@ class User:
         self.username = username
         self.password = password
         data = self.get_jwt_data()
-        self.access_token = JWTUtils.encode(data, minutes=JWTUtils.get_access_token_lifetime())
-        self.refresh_token = JWTUtils.encode(data, days=JWTUtils.get_access_token_lifetime())
+        self.access_token_list = [JWTUtils.encode(data, minutes=JWTUtils.get_access_token_lifetime())]
+        self.refresh_token_list = [JWTUtils.encode(data, days=JWTUtils.get_access_token_lifetime())]
 
     def compare_password(self, password: str):
         return password == self.password
@@ -20,15 +20,19 @@ class User:
         return user_id == self.user_id
 
     def compare_access_token(self, access_token: str):
-        return access_token == self.access_token
+        return access_token in self.access_token_list
 
     def compare_refresh_token(self, refresh_token: str):
-        return refresh_token == self.refresh_token
+        return refresh_token in self.refresh_token_list
 
     def login(self, password: str):
         if not self.compare_password(password):
             raise ValueError(StatusMessage.INVALID_PASSWORD)
-        return self.user_id, self.access_token, self.refresh_token
+        new_access_token = JWTUtils.encode(self.get_jwt_data(), minutes=JWTUtils.get_access_token_lifetime())
+        new_refresh_token = JWTUtils.encode(self.get_jwt_data(), days=JWTUtils.get_refresh_token_lifetime())
+        self.access_token_list.append(new_access_token)
+        self.refresh_token_list.append(new_refresh_token)
+        return self.user_id, new_access_token, new_refresh_token
 
     def validate_token(self, token: str):
         decoded = JWTUtils.decode(token)
@@ -42,12 +46,11 @@ class User:
         if not self.compare_refresh_token(token):
             raise InvalidTokenError("Does not match refresh token on record")
         data = self.get_jwt_data()
-        self.access_token = JWTUtils.encode(data, minutes=JWTUtils.get_access_token_lifetime())
-        self.refresh_token = JWTUtils.encode(data, days=JWTUtils.get_refresh_token_lifetime())
-        return {
-            "access_token": self.access_token,
-            "refresh_token": self.refresh_token
-        }
+        new_access_token = JWTUtils.encode(data, minutes=JWTUtils.get_access_token_lifetime())
+        self.access_token_list.append(new_access_token)
+        self.refresh_token_list.remove(token)
+        new_refresh_token = JWTUtils.encode(data, days=JWTUtils.get_refresh_token_lifetime())
+        return new_access_token, new_refresh_token
 
     def get_jwt_data(self):
         return {
@@ -57,6 +60,6 @@ class User:
 
     def tokens(self):
         return {
-            "access_token": self.access_token,
-            "refresh_token": self.refresh_token
+            "access_tokens": self.access_token_list,
+            "refresh_tokens": self.refresh_token_list
         }

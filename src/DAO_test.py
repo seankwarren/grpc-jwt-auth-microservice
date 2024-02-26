@@ -42,22 +42,23 @@ def test_login_user_failure(user_dao: UserDAO):
     assert str(StatusMessage.USER_NOT_FOUND.value) in str(exc_info.value), "Should raise ValueError for non-existent user."
 
 def test_validate_token_success(user_dao: UserDAO, sample_user):
-    assert user_dao.ValidateToken(sample_user.user_id, sample_user.access_token), "Token validation should succeed."
+    assert user_dao.ValidateToken(sample_user.user_id, sample_user.access_token_list[0]), "Token validation should succeed."
 
 def test_validate_token_failure(user_dao: UserDAO, sample_user):
     with pytest.raises(InvalidTokenError):
         user_dao.ValidateToken(sample_user.user_id, "incorrect_token")
 
 def test_refresh_tokens_success(user_dao: UserDAO, sample_user):
-    new_tokens = user_dao.RefreshTokens(sample_user.user_id, sample_user.refresh_token)
-    assert new_tokens, "Should return new tokens on refresh."
+    access_token, refresh_token = user_dao.RefreshTokens(sample_user.user_id, sample_user.refresh_token_list[0])
+    assert isinstance(access_token, str), "Should return new access token."
+    assert isinstance(refresh_token, str), "Should return new refresh token."
 
 def test_refresh_tokens_failure(user_dao: UserDAO, sample_user):
     with pytest.raises(InvalidTokenError):
         user_dao.RefreshTokens(sample_user.user_id, "incorrect_token")
 
 def test_delete_user_success(user_dao: UserDAO, sample_user):
-    result = user_dao.DeleteUser(sample_user.user_id, sample_user.access_token)
+    result = user_dao.DeleteUser(sample_user.user_id, sample_user.access_token_list[0])
     assert result, "User should be successfully deleted."
 
 def test_delete_nonexistent_user(user_dao: UserDAO):

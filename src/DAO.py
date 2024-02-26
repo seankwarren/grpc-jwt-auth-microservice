@@ -31,7 +31,7 @@ class UserDAO:
             raise ValueError(StatusMessage.USER_EXISTS.value)
         user = User(user_id, username, password)
         self.users.append(user)
-        return user.user_id, user.access_token, user.refresh_token
+        return user.user_id, user.access_token_list[0], user.refresh_token_list[0]
 
     def LoginUser(self, username: str, password: str):
         user = self.GetUserByUsername(username)
