@@ -5,11 +5,11 @@ from jwt_utils import JWTUtils  # Ensure this utility is correctly implemented f
 from jwt.exceptions import InvalidTokenError
 from status import StatusMessage
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def user_dao():
     return UserDAO()
 
-@pytest.fixture
+@pytest.fixture(scope="module")
 def sample_user(user_dao: UserDAO):
     username = "testuser"
     password = "password"

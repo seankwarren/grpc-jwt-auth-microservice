@@ -6,8 +6,8 @@ from user import User
 
 
 class UserDAO:
-    def __init__(self):
-        self.users: list[User] = []
+    def __init__(self, initial_users: list[User] = []):
+        self.users: list[User] = initial_users
 
     def GetUserById(self, user_id: int):
         for user in self.users:
