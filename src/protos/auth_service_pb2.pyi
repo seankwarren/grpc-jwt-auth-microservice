@@ -54,16 +54,19 @@ global___RegisterUserRequest = RegisterUserRequest
 class RegisterUserResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    USER_ID_FIELD_NUMBER: builtins.int
     TOKENS_FIELD_NUMBER: builtins.int
+    user_id: builtins.int
     @property
     def tokens(self) -> global___AuthTokens: ...
     def __init__(
         self,
         *,
+        user_id: builtins.int = ...,
         tokens: global___AuthTokens | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["tokens", b"tokens", "user_id", b"user_id"]) -> None: ...
 
 global___RegisterUserResponse = RegisterUserResponse
 
@@ -72,19 +75,16 @@ class LoginUserRequest(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
     USERNAME_FIELD_NUMBER: builtins.int
-    USER_ID_FIELD_NUMBER: builtins.int
     PASSWORD_FIELD_NUMBER: builtins.int
     username: builtins.str
-    user_id: builtins.int
     password: builtins.str
     def __init__(
         self,
         *,
         username: builtins.str = ...,
-        user_id: builtins.int = ...,
         password: builtins.str = ...,
     ) -> None: ...
-    def ClearField(self, field_name: typing_extensions.Literal["password", b"password", "user_id", b"user_id", "username", b"username"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["password", b"password", "username", b"username"]) -> None: ...
 
 global___LoginUserRequest = LoginUserRequest
 
@@ -92,16 +92,19 @@ global___LoginUserRequest = LoginUserRequest
 class LoginUserResponse(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
+    USER_ID_FIELD_NUMBER: builtins.int
     TOKENS_FIELD_NUMBER: builtins.int
+    user_id: builtins.int
     @property
     def tokens(self) -> global___AuthTokens: ...
     def __init__(
         self,
         *,
+        user_id: builtins.int = ...,
         tokens: global___AuthTokens | None = ...,
     ) -> None: ...
     def HasField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["tokens", b"tokens"]) -> None: ...
+    def ClearField(self, field_name: typing_extensions.Literal["tokens", b"tokens", "user_id", b"user_id"]) -> None: ...
 
 global___LoginUserResponse = LoginUserResponse
 

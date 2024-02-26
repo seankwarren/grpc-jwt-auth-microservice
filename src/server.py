@@ -3,6 +3,7 @@ from concurrent import futures
 from datetime import timedelta
 from dotenv import load_dotenv
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
+from DAO import UserDAO
 from jwt_utils import JWTUtils
 from protos import auth_service_pb2, auth_service_pb2_grpc
 from status import StatusMessage
@@ -22,7 +23,8 @@ class AuthenticationService(auth_service_pb2_grpc.AuthenticationServiceServicer)
     REFRESH_TOKEN_LIFETIME = int(os.getenv("REFRESH_TOKEN_LIFETIME", 30))  # days
 
     def __init__(self):
-        self.num_users = 0
+        self.dao = UserDAO()
+        pass
 
     def RegisterUser(self, request, context):
         """
@@ -37,20 +39,19 @@ class AuthenticationService(auth_service_pb2_grpc.AuthenticationServiceServicer)
         """
         logging.info("RegisterUser endpoint called.")
         try:
-            data = {"user_id": self.num_users, "username": request.username}
-            access_token = JWTUtils.encode(data, minutes=self.ACCESS_TOKEN_LIFETIME)
-            refresh_token = JWTUtils.encode(data, days=self.REFRESH_TOKEN_LIFETIME)
+            user_id, access_token, refresh_token = self.dao.RegisterUser(request.username, request.password)
             response = auth_service_pb2.RegisterUserResponse(
+                user_id=user_id,
                 tokens=auth_service_pb2.AuthTokens(
                     accessToken=access_token,
                     refreshToken=refresh_token,
                 ),
             )
-            self.num_users += 1
             return response
         except Exception as e:
             context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details('Internal server error occurred while registering user.')
+            context.set_details(f"{StatusMessage.REGISTRATION_FAILED}: {e}")
+            logging.error(f"{StatusMessage.REGISTRATION_FAILED}: {e}")
             return auth_service_pb2.RegisterUserResponse()
 
     def LoginUser(self, request, context):
@@ -66,10 +67,9 @@ class AuthenticationService(auth_service_pb2_grpc.AuthenticationServiceServicer)
         """
         logging.info("LoginUser endpoint called.")
         try:
-            data = {"user_id": request.user_id, "username": request.username}
-            access_token = JWTUtils.encode(data, minutes=self.ACCESS_TOKEN_LIFETIME)
-            refresh_token = JWTUtils.encode(data, days=self.REFRESH_TOKEN_LIFETIME)
+            user_id, access_token, refresh_token = self.dao.LoginUser(request.username, request.password)
             response = auth_service_pb2.LoginUserResponse(
+                user_id=user_id,
                 tokens=auth_service_pb2.AuthTokens(
                     accessToken=access_token,
                     refreshToken=refresh_token,
@@ -78,7 +78,8 @@ class AuthenticationService(auth_service_pb2_grpc.AuthenticationServiceServicer)
             return response
         except Exception as e:
             context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details(StatusMessage.LOGIN_FAILED)
+            context.set_details(f"{StatusMessage.LOGIN_FAILED.value}: {e}")
+            logging.error(f"{StatusMessage.LOGIN_FAILED.value}: {e}")
             return auth_service_pb2.LoginUserResponse()
 
     def ValidateToken(self, request, context):
@@ -94,22 +95,31 @@ class AuthenticationService(auth_service_pb2_grpc.AuthenticationServiceServicer)
         """
         logging.info("ValidateToken endpoint called.")
         try:
+            success = self.dao.ValidateToken(request.user_id, request.token)
+            if not success:
+                raise InvalidTokenError("ValidateToken failed.")
             decoded_token = JWTUtils.decode(request.token)
             user_id = decoded_token.get("user_id", "None")
             # Verify that the user in the token matches the user in the request
             if user_id != request.user_id:
+                logging.info("User in token does not match the user in the request.")
                 raise InvalidTokenError("User in token does not match the user in the request.")
             context.set_code(grpc.StatusCode.OK)
             context.set_details(StatusMessage.VALIDATE_TOKEN_SUCCEEDED.value)
-        except ExpiredSignatureError:
+            logging.info(StatusMessage.VALIDATE_TOKEN_SUCCEEDED.value)
+        except ExpiredSignatureError as e:
             context.set_code(grpc.StatusCode.UNAUTHENTICATED)
             context.set_details(StatusMessage.EXPIRED_TOKEN.value)
-        except InvalidTokenError:
+            logging.info(f"{StatusMessage.EXPIRED_TOKEN}: {e}")
+        except InvalidTokenError as e:
             context.set_code(grpc.StatusCode.UNAUTHENTICATED)
             context.set_details(StatusMessage.INVALID_TOKEN.value)
+            print(e.args)
+            logging.info(f"{StatusMessage.INVALID_TOKEN}: {e.args[0]}")
         except Exception as e:
             context.set_code(grpc.StatusCode.INTERNAL)
-            context.set_details(f"{StatusMessage.INTERNAL_ERROR.value}: {e}")
+            context.set_details(StatusMessage.INTERNAL_ERROR.value)
+            logging.info(f"{StatusMessage.INTERNAL_ERROR}: {e}")
         finally:
             # Return response
             return auth_service_pb2.ValidateTokenResponse()
@@ -160,9 +170,10 @@ class AuthenticationService(auth_service_pb2_grpc.AuthenticationServiceServicer)
             context.set_details(f"{StatusMessage.INTERNAL_ERROR.value}: {e}")
             return auth_service_pb2.RefreshTokenResponse()
 
+
 def serve():
     service = AuthenticationService()
-    port = 50051
+    port = os.getenv('SERVER_PORT', 50051)
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=MAX_WORKERS))
     auth_service_pb2_grpc.add_AuthenticationServiceServicer_to_server(service, server)
 

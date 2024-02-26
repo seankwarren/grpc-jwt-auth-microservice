@@ -13,3 +13,6 @@ class StatusMessage(enum.Enum):
     EXPIRED_TOKEN = "Token is expired"
     INVALID_TOKEN = "Token is invalid"
     INTERNAL_ERROR = "Internal server error"
+    USER_EXISTS = "User already exists"
+    USER_NOT_FOUND = "User not found"
+    INVALID_PASSWORD = "Invalid password"

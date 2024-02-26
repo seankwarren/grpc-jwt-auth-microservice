@@ -20,16 +20,17 @@ message RegisterUserRequest {
 }
 
 message RegisterUserResponse {
+    int64 user_id = 1;
     AuthTokens tokens = 2;
 }
 
 message LoginUserRequest {
     string username = 1;
-    int64 user_id = 2;
-    string password = 3;
+    string password = 2;
 }
 
 message LoginUserResponse {
+    int64 user_id = 1;
     AuthTokens tokens = 2;
 }
 
