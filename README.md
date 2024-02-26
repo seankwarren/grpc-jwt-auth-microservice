@@ -65,8 +65,10 @@ python src/server.py
 To run the tests, execute:
 
 ```bash
-pytest src/test.py -v
+pytest src/**_test.py -v
 ```
+
+Note: this will boot up a gRPC server on port 50051, so make sure the port is available.
 
 ### Configuration: Environment Variables
 
